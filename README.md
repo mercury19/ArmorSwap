@@ -4,6 +4,6 @@ There are additional files and folders that need to be created within the for-lo
 
 There are a lot of "null" values in ArmorSets.json that will prevent the file from being processed properly, so the code WILL NOT RUN in its current state.
 
-I need to edit these values by hand via a very tedious process. I can't focuse well enough to do it all in one sitting, so I'm bouncing back and forth between
+I need to edit these values by hand via a very tedious process. I can't focuse well enough to do it all in one sitting, so I'm bouncing back and forth between writing the code and finishing the data.
 
-writing the code and finishing the data.
+There is a brief explanation of the json fields in constants.py.

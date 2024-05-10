@@ -2,6 +2,16 @@
 import re
 import string
 
+# Json Fields
+# model: str - the model id
+# name: str - the name of the armor set
+# pack: int - the pack style for the armor set
+# rank: int - the rank (low, high, master, layered)
+# rarity: int - rarity in range 1 - 10
+# slots: list[dicts] - data for the slots for the armor set (5 possible: Arm, Head, Body, Waist, Legs)
+# base_swaps: list[int] - slots to be copied for the 'recommended' packs. multi-digit numbers represent multiple parts to be put in one folder. 5 is all in one.
+# slot_ids: list[str] - this is only for the manual json editing process and is not used by the program.
+# set_notes: str - Information for the armor set as a whole, to be put into an ini file.
 fields = ['model', 'name', 'pack', 'rank', 'rarity', 'slots', 'base_swaps',
           'slot_ids', 'set_notes']
 
