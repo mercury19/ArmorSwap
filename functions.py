@@ -1,43 +1,48 @@
 #! python
 import itertools
 import operator
-import os
 import re
+import shutil
 import string
 
-import constants
+import constants as con
 
 
-def base_path():
-    return string.Template('D:\\The Drawer\\MHR Modding\\${s1}\\${s2}\\${s3}')
+def get_src_path(version, streaming, model):
+    keys = {'s2': version, 's4': streaming, 's6': model} | con.src_keys
+
+    return '{}{}'.format(
+        con.base_path.substitute(keys),
+        con.files_path.substitute(keys)
+    )
 
 
-def files_path():
-    return string.Template('natives\\STM\\${s4}player\\mod\\${s5}\\${s6}')
-
-
-def modinfo():
-    return string.Template('name=${name}\ncategory=Armor\nauthor'
-                           '=mercury19\nNameAsBundle=${bundle}')
+def modinfo(name, desc, parent, mode=0):
+    modes = ['AddonFor', 'NameAsBundle']
+    content = ('name={name}\ncategory=Armor\nauthor=mercury19'
+               '\n{mode_label}={parent}\ndescription={desc}').format(
+        name, modes[mode], parent, desc
+    )
+    return content
 
 
 def file_sort_key(item):
     return re.compile(r'^\D+').match(item).group()
 
 
-def pack_path(pack):
-    return constants.base_path.substitute(constants.src_keys, s2=pack)
+def copy_and_rename(ids, parts, source, dest):
+    for part_id in ids:
+        if part_id in parts:
+            for file in parts[part_id]:
+                new_file = re.sub('m_', 'f_', file)
+                shutil.copy2(
+                    '{}\\{}'.format(source, file),
+                    '{}\\{}'.format(dest, new_file)
+                )
 
 
-def dummy_mod(parent, name):
-    dir_path = '{}\\{}'.format(pack_path(parent), name)
-    os.makedirs(dir_path)
-
-    with open('{}\\modinfo.ini'.format(dir_path)) as f:
-        ...
-
-
-def mk_groups(data, x):
-    return [list(g) for k, g in itertools.groupby(data,
-                                                  key=operator.itemgetter(x))]
-
+def get_groups(data, key):
+    return [(k, list(g)) for k, g in itertools.groupby(
+        data,
+        key=operator.itemgetter(key)
+    )]

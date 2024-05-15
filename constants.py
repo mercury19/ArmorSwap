@@ -2,6 +2,8 @@
 import re
 import string
 
+from pack import Pack, SubPack
+
 # Json Fields
 # model: str - the model id
 # name: str - the name of the armor set
@@ -33,7 +35,14 @@ version = ('re_chunk_000', 're_chunk_000.pak.patch_001')
 # ${s4} streaming or not
 streaming = ('', 'streaming\\')
 
-packs = ['Low Rank', 'High Rank', 'Master Rank']
+packs = {
+    (0, 0): SubPack('Low Rank'),
+    (0, 1): SubPack('High Rank'),
+    (0, 2): SubPack('Master Rank'),
+    (0, 3): SubPack('Layered'),
+    1: Pack('Partial'),
+    2: Pack('Minimal')
+}
 
 parts = {
     'arm': 'Arms',
@@ -44,4 +53,15 @@ parts = {
     'wst': 'Waist',
 }
 
+ranks = [
+    'Low Rank',
+    'High Rank',
+    'Master Rank',
+    'Layered'
+]
+
 group_key = re.compile(r'^[a-zA-Z]+')
+
+dummy_desc = ('This mod is empty! But you should activate it, otherwise you '
+              'will get a bunch of annoying popups trying to activate the '
+              'other parts of this pack.')
